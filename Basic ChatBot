@@ -12,7 +12,7 @@ def chatbot_response(user_input):
         return "Sorry, I don't understand that."
 
 # Step 2: Chat loop
-print("🤖 Welcome to Simple Chatbot! (type 'bye' to exit)")
+print("Welcome to Simple Chatbot! (type 'bye' to exit)")
 
 while True:
     user_message = input("You: ")
