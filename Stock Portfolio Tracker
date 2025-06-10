@@ -1,0 +1,57 @@
+# Step 1: Define stock prices (hardcoded)
+stock_prices = {
+    "AAPL": 180,
+    "TSLA": 250,
+    "GOOGL": 2800,
+    "MSFT": 330,
+    "AMZN": 135
+}
+
+# Step 2: Get user input
+portfolio = {}
+
+print("📈 Welcome to Stock Portfolio Tracker!")
+print("Available stocks:", ", ".join(stock_prices.keys()))
+
+while True:
+    stock = input("Enter stock symbol (or type 'done' to finish): ").upper()
+    if stock == 'DONE':
+        break
+
+    if stock not in stock_prices:
+        print("⚠️ Invalid stock symbol. Please choose from:", ", ".join(stock_prices.keys()))
+        continue
+
+    try:
+        quantity = int(input(f"Enter quantity of {stock}: "))
+        if quantity < 0:
+            print("⚠️ Quantity cannot be negative.")
+            continue
+        portfolio[stock] = portfolio.get(stock, 0) + quantity
+    except ValueError:
+        print("⚠️ Please enter a valid number.")
+
+# Step 3: Calculate total investment
+print("\n🧾 Portfolio Summary:")
+total_investment = 0
+for stock, qty in portfolio.items():
+    price = stock_prices[stock]
+    value = price * qty
+    print(f"{stock}: {qty} shares × ${price} = ${value}")
+    total_investment += value
+
+print(f"\n💰 Total Investment: ${total_investment}")
+
+# Step 4: Optional file save
+save = input("\nDo you want to save this summary to a file? (yes/no): ").lower()
+if save == 'yes':
+    filename = input("Enter file name (without extension): ")
+    with open(filename + ".csv", "w") as file:
+        file.write("Stock,Quantity,Price,Total Value\n")
+        for stock, qty in portfolio.items():
+            price = stock_prices[stock]
+            value = price * qty
+            file.write(f"{stock},{qty},{price},{value}\n")
+        file.write(f"\nTotal Investment,,,{total_investment}")
+    print(f"✅ Summary saved to {filename}.csv")
+
